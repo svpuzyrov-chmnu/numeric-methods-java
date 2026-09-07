@@ -7,8 +7,8 @@ public class SignDigitsRoundApp {
         double smallNum = 0.0000239929001;
 
         SignDigitsRoundable[] roundables = {
-                new SignDigitsRoundableImpl(bigNum),
-                new SignDigitsRoundableImpl(smallNum),
+                new DefaultSignDigitsRoundable(bigNum),
+                new DefaultSignDigitsRoundable(smallNum),
         };
 
         System.out.println("===========================");

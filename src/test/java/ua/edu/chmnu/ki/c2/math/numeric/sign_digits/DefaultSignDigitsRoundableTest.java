@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class SignDigitsRoundableImplTest {
+class DefaultSignDigitsRoundableTest {
 
     @ParameterizedTest
     @CsvSource({
@@ -17,7 +17,7 @@ class SignDigitsRoundableImplTest {
     })
     void shouldRoundToGivenSignDigits(double origin, int digits, double expected) {
 
-        SignDigitsRoundable roundable = new SignDigitsRoundableImpl(origin);
+        SignDigitsRoundable roundable = new DefaultSignDigitsRoundable(origin);
 
         var actual = roundable.roundTo(digits);
 

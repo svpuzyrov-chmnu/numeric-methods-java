@@ -3,10 +3,10 @@ package ua.edu.chmnu.ki.c2.math.numeric.sign_digits;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class SignDigitsRoundableImpl implements SignDigitsRoundable {
+public class DefaultSignDigitsRoundable implements SignDigitsRoundable {
     private final double source;
 
-    public SignDigitsRoundableImpl(double source) {
+    public DefaultSignDigitsRoundable(double source) {
         this.source = source;
     }
 
