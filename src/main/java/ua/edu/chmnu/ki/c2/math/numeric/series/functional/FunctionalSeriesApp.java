@@ -1,6 +1,6 @@
 package ua.edu.chmnu.ki.c2.math.numeric.series.functional;
 
-import ua.edu.chmnu.ki.c2.math.numeric.series.Series;
+import ua.edu.chmnu.ki.c2.math.numeric.series.FunctionalSeries;
 import ua.edu.chmnu.ki.c2.math.numeric.series.UserInput;
 import ua.edu.chmnu.ki.c2.math.numeric.sign_digits.DefaultSignDigitsRoundable;
 import ua.edu.chmnu.ki.c2.math.numeric.sign_digits.DefaultSignDigitsTolerance;
@@ -25,12 +25,12 @@ public class FunctionalSeriesApp {
                 .withX()
                 .build();
 
-        Series series = new DefaultFunctionalSeries(1, START_EVALUATOR, MULTIPLIER);
+        FunctionalSeries series = new DefaultFunctionalSeries(1, START_EVALUATOR, MULTIPLIER);
 
         processSeries(series, userInput);
     }
 
-    private static void processSeries(Series series, UserInput userInput) {
+    private static void processSeries(FunctionalSeries series, UserInput userInput) {
         var result = series.compute(userInput.getX(), userInput.getTolerance());
 
         var signDigits = SIGN_DIGITS_TOLERANCE.getByTolerance(userInput.getTolerance());
@@ -39,7 +39,7 @@ public class FunctionalSeriesApp {
 
         var sourceValue = new DefaultSignDigitsRoundable(SOURCE_FUNCTION.apply(userInput.getX())).roundTo(signDigits);
         System.out.println("Result: " + result + " with tolerance: " + userInput.getTolerance());
-        System.out.println("Source function value: " + sourceValue+ " with tolerance: " + userInput.getTolerance());
+        System.out.println("Source function value: " + sourceValue + " with tolerance: " + userInput.getTolerance());
         System.out.println("Count of iterations: " + series.countOfIterations());
     }
 }

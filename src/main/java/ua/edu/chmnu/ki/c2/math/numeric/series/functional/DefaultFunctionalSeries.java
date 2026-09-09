@@ -1,11 +1,11 @@
 package ua.edu.chmnu.ki.c2.math.numeric.series.functional;
 
-import ua.edu.chmnu.ki.c2.math.numeric.series.Series;
+import ua.edu.chmnu.ki.c2.math.numeric.series.FunctionalSeries;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-public class DefaultFunctionalSeries implements Series {
+public class DefaultFunctionalSeries implements FunctionalSeries {
     private final int startNumber;
     private final Function<Double, Double> startEvaluator;
     private final BiFunction<Double, Integer, Double> multiplier;
@@ -16,10 +16,6 @@ public class DefaultFunctionalSeries implements Series {
         this.startNumber = startNumber;
         this.startEvaluator = startEvaluator;
         this.multiplier = multiplier;
-    }
-
-    public int getStartNumber() {
-        return startNumber;
     }
 
     @Override

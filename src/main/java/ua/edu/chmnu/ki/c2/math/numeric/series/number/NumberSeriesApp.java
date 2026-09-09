@@ -1,6 +1,6 @@
 package ua.edu.chmnu.ki.c2.math.numeric.series.number;
 
-import ua.edu.chmnu.ki.c2.math.numeric.series.Series;
+import ua.edu.chmnu.ki.c2.math.numeric.series.NumberSeries;
 import ua.edu.chmnu.ki.c2.math.numeric.series.UserInput;
 import ua.edu.chmnu.ki.c2.math.numeric.sign_digits.DefaultSignDigitsRoundable;
 import ua.edu.chmnu.ki.c2.math.numeric.sign_digits.DefaultSignDigitsTolerance;
@@ -20,12 +20,12 @@ public class NumberSeriesApp {
                 .withTolerance()
                 .build();
 
-        Series series = new DefaultNumberSeries(1.0, 0, MULTIPLIER);
+        NumberSeries series = new DefaultNumberSeries(1.0, 0, MULTIPLIER);
 
         processSeries(series, userInput.getTolerance());
     }
 
-    private static void processSeries(Series series, double tolerance) {
+    private static void processSeries(NumberSeries series, double tolerance) {
         var result = series.compute(tolerance);
 
         final SignDigitsRoundable signDigitsRoundable = new DefaultSignDigitsRoundable(result);

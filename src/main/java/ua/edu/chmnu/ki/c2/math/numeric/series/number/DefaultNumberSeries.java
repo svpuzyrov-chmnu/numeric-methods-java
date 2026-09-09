@@ -1,10 +1,10 @@
 package ua.edu.chmnu.ki.c2.math.numeric.series.number;
 
-import ua.edu.chmnu.ki.c2.math.numeric.series.Series;
+import ua.edu.chmnu.ki.c2.math.numeric.series.NumberSeries;
 
 import java.util.function.Function;
 
-public class DefaultNumberSeries implements Series {
+public class DefaultNumberSeries implements NumberSeries {
     private final double startValue;
     private final int startNumber;
     private final Function<Integer, Double> multiplier;
@@ -17,14 +17,6 @@ public class DefaultNumberSeries implements Series {
         this.multiplier = multiplier;
     }
 
-
-    public double getStartValue() {
-        return startValue;
-    }
-
-    public int getStartNumber() {
-        return startNumber;
-    }
 
     @Override
     public int countOfIterations() {
