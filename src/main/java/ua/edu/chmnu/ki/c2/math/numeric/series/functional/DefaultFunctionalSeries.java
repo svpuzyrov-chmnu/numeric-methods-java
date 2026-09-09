@@ -1,6 +1,7 @@
 package ua.edu.chmnu.ki.c2.math.numeric.series.functional;
 
 import ua.edu.chmnu.ki.c2.math.numeric.series.FunctionalSeries;
+import ua.edu.chmnu.ki.c2.math.numeric.sign_digits.Result;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -24,9 +25,13 @@ public class DefaultFunctionalSeries implements FunctionalSeries {
     }
 
     @Override
-    public double compute(double x, double tolerance) {
+    public Result compute(double x, double tolerance) {
 
         this.countIterations = 0;
+
+        tolerance = transformToleranceBy(x, tolerance);
+
+        x = transformArgumentTo(x);
 
         var currentTerm = this.startEvaluator.apply(x);
 
@@ -34,7 +39,7 @@ public class DefaultFunctionalSeries implements FunctionalSeries {
 
         var previous = result;
 
-        for (var n = this.startNumber;; ++n) {
+        for (var n = this.startNumber; ; ++n) {
             currentTerm *= multiplier.apply(x, n);
 
             previous = result;
@@ -48,6 +53,10 @@ public class DefaultFunctionalSeries implements FunctionalSeries {
             ++countIterations;
         }
 
-        return result;
+        return new Result(result);
+    }
+
+    protected double transformArgumentTo(double x) {
+        return x;
     }
 }

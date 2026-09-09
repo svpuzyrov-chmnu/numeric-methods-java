@@ -43,10 +43,12 @@ public class UserInput {
             return this;
         }
 
-        public Builder withX() {
-            System.out.print("Enter x:");
+        public Builder withX(double from, double to) {
 
-            this.x = scanner.nextDouble();
+            do {
+                System.out.print("Enter x from range (" + from + ", " + to +"):");
+                this.x = scanner.nextDouble();
+            } while (this.x < from || this.x > to);
 
             return this;
         }

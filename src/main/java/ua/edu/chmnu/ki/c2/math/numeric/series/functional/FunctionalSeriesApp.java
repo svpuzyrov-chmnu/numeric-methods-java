@@ -22,7 +22,7 @@ public class FunctionalSeriesApp {
     static void main() {
         UserInput userInput = UserInput.builder()
                 .withTolerance()
-                .withX()
+                .withX(-1.0, 0.1)
                 .build();
 
         FunctionalSeries series = new DefaultFunctionalSeries(1, START_EVALUATOR, MULTIPLIER);
@@ -31,15 +31,15 @@ public class FunctionalSeriesApp {
     }
 
     private static void processSeries(FunctionalSeries series, UserInput userInput) {
-        var result = series.compute(userInput.getX(), userInput.getTolerance());
+        double tolerance = userInput.getTolerance();
 
-        var signDigits = SIGN_DIGITS_TOLERANCE.getByTolerance(userInput.getTolerance());
+        var result = series.compute(userInput.getX(), tolerance);
 
-        result = new DefaultSignDigitsRoundable(result).roundTo(signDigits);
+        var signDigits = SIGN_DIGITS_TOLERANCE.getByTolerance(tolerance);
 
         var sourceValue = new DefaultSignDigitsRoundable(SOURCE_FUNCTION.apply(userInput.getX())).roundTo(signDigits);
-        System.out.println("Result: " + result + " with tolerance: " + userInput.getTolerance());
-        System.out.println("Source function value: " + sourceValue + " with tolerance: " + userInput.getTolerance());
+        System.out.println("Result: " + result.roundBy(tolerance) + " with tolerance: " + tolerance);
+        System.out.println("Source function value: " + sourceValue + " with tolerance: " + tolerance);
         System.out.println("Count of iterations: " + series.countOfIterations());
     }
 }

@@ -7,21 +7,21 @@ import ua.edu.chmnu.ki.c2.math.numeric.sign_digits.Result;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class FastLogarithmFunctionalSeriesTest {
+class ExponentFunctionalSeriesTest {
 
-    private final FunctionalSeries SERIES = new FastLogarithmFunctionalSeries();
+    private final FunctionalSeries SERIES = new ExponentFunctionalSeries();
 
     @ParameterizedTest
     @CsvSource({
-            "2.5, 1e-7",
-            "0.008913, 1e-7",
-            "0.5, 1e-8",
-            "15.4, 1e-4",
-            "255.56, 1e-7",
-            "10049.5556, 1e-9",
+            "-10.5, 1e-5",
+            "3.4, 1e-6",
+            "-5.8, 1e-6",
+            "-20.45, 1e-5",
+            "-100.58, 1e-5",
+            "120.77, 1e-6",
     })
-    void shouldComputeLogarithmWithTolerance(double x, double tolerance) {
-        var expected = new Result(Math.log(x)).roundBy(tolerance);
+    void shouldComputeExponential(double x, double tolerance) {
+        var expected = new Result(Math.exp(x)).roundBy(tolerance);
 
         var actual = SERIES.compute(x, tolerance).roundBy(tolerance);
 
