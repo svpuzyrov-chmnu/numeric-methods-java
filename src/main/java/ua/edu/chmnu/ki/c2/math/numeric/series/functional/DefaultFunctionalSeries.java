@@ -32,10 +32,18 @@ public class DefaultFunctionalSeries implements FunctionalSeries {
 
         var result = currentTerm;
 
-        for (var n = this.startNumber; Math.abs(currentTerm) > tolerance; ++n) {
+        var previous = result;
+
+        for (var n = this.startNumber;; ++n) {
             currentTerm *= multiplier.apply(x, n);
 
+            previous = result;
+
             result += currentTerm;
+
+            if (Math.abs(result - previous) < tolerance) {
+                break;
+            }
 
             ++countIterations;
         }
