@@ -34,6 +34,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
+                    <enablePreview>${maven.compiler.enablePreview}</enablePreview>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.projectlombok</groupId>
@@ -41,6 +42,13 @@
                             <version>${lombok.version}</version>
                         </path>
                     </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>${maven.surefire.argLine}</argLine>
                 </configuration>
             </plugin>
         </plugins>
@@ -54,15 +62,52 @@
             </activation>
             <properties>
                 <maven.compiler.release>17</maven.compiler.release>
+                <maven.compiler.enablePreview>true</maven.compiler.enablePreview>
+                <maven.surefire.argLine>--enable-preview</maven.surefire.argLine>
             </properties>
         </profile>
         <profile>
-            <id>java-25</id>
+            <id>java-21-preview</id>
+            <activation>
+                <jdk>[21,22)</jdk>
+            </activation>
+            <properties>
+                <maven.compiler.release>21</maven.compiler.release>
+                <maven.compiler.enablePreview>true</maven.compiler.enablePreview>
+                <maven.surefire.argLine>--enable-preview</maven.surefire.argLine>
+            </properties>
+        </profile>
+        <profile>
+            <id>java-24-preview</id>
+            <activation>
+                <jdk>[24,25)</jdk>
+            </activation>
+            <properties>
+                <maven.compiler.release>24</maven.compiler.release>
+                <maven.compiler.enablePreview>true</maven.compiler.enablePreview>
+                <maven.surefire.argLine>--enable-preview</maven.surefire.argLine>
+            </properties>
+        </profile>
+        <profile>
+            <id>java-25-preview</id>
             <activation>
                 <jdk>[25,26)</jdk>
             </activation>
             <properties>
                 <maven.compiler.release>25</maven.compiler.release>
+                <maven.compiler.enablePreview>true</maven.compiler.enablePreview>
+                <maven.surefire.argLine>--enable-preview</maven.surefire.argLine>
+            </properties>
+        </profile>
+        <profile>
+            <id>java-26-preview</id>
+            <activation>
+                <jdk>[26,27)</jdk>
+            </activation>
+            <properties>
+                <maven.compiler.release>26</maven.compiler.release>
+                <maven.compiler.enablePreview>true</maven.compiler.enablePreview>
+                <maven.surefire.argLine>--enable-preview</maven.surefire.argLine>
             </properties>
         </profile>
     </profiles>
