@@ -9,8 +9,6 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.source>25</maven.compiler.source>
-        <maven.compiler.target>25</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <lombok.version>1.18.48</lombok.version>
     </properties>
@@ -47,4 +45,34 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>java-11</id>
+            <activation>
+                <jdk>[11,12)</jdk>
+            </activation>
+            <properties>
+                <maven.compiler.release>11</maven.compiler.release>
+            </properties>
+        </profile>
+        <profile>
+            <id>java-17</id>
+            <activation>
+                <jdk>[17,18)</jdk>
+            </activation>
+            <properties>
+                <maven.compiler.release>17</maven.compiler.release>
+            </properties>
+        </profile>
+        <profile>
+            <id>java-25</id>
+            <activation>
+                <jdk>[25,26)</jdk>
+            </activation>
+            <properties>
+                <maven.compiler.release>25</maven.compiler.release>
+            </properties>
+        </profile>
+    </profiles>
 </project>

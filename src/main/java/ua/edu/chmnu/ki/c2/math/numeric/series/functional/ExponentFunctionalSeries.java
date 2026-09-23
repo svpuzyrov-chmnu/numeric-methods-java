@@ -10,7 +10,7 @@ public class ExponentFunctionalSeries extends DefaultFunctionalSeries implements
     }
 
     public ExponentFunctionalSeries(int startNumber) {
-        super(startNumber, _ -> 1.0, (x, n) ->x / (n + 1.0));
+        super(startNumber, ignored -> 1.0, (x, n) -> x / (n + 1.0));
     }
 
     @Override
