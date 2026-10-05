@@ -22,4 +22,8 @@ public interface Matrix extends Copyable<Matrix> {
     Vector getRow(int i);
 
     Vector getCol(int j);
+
+    default boolean isSquare() {
+        return rows() == cols();
+    }
 }

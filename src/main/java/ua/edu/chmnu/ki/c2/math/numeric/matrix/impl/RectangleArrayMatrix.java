@@ -13,6 +13,15 @@ public class RectangleArrayMatrix implements Matrix {
         this.data = data;
     }
 
+    public RectangleArrayMatrix(Matrix source) {
+        this.data = new double[source.rows()][source.cols()];
+        for (int i = 0; i < source.rows(); i++) {
+            for (int j = 0; j < source.cols(); j++) {
+                this.data[i][j] = source.get(i, j);
+            }
+        }
+    }
+
     private void checkIndex(int i, int j) {
         if (i < 0 || i >= data.length) {
             throw new MatrixInvalidIndexException(new IndexOutOfBoundsException("Row index " + i + " is out of bounds for length " + data.length), i, j);
