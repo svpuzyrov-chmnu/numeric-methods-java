@@ -5,9 +5,11 @@ import ua.edu.chmnu.ki.c2.math.numeric.matrix.exception.MatrixInvalidIndexExcept
 import ua.edu.chmnu.ki.c2.math.numeric.vector.Vector;
 import ua.edu.chmnu.ki.c2.math.numeric.vector.impl.ArrayVector;
 
+import java.util.Arrays;
+
 public class RectangleArrayMatrix implements Matrix {
 
-    private double[][] data;
+    private final double[][] data;
 
     public RectangleArrayMatrix(double[][] data) {
         this.data = data;
@@ -16,9 +18,7 @@ public class RectangleArrayMatrix implements Matrix {
     public RectangleArrayMatrix(Matrix source) {
         this.data = new double[source.rows()][source.cols()];
         for (int i = 0; i < source.rows(); i++) {
-            for (int j = 0; j < source.cols(); j++) {
-                this.data[i][j] = source.get(i, j);
-            }
+            this.data[i] = Arrays.copyOf(source.getRow(i).toArray(), source.cols());
         }
     }
 
@@ -76,7 +76,7 @@ public class RectangleArrayMatrix implements Matrix {
     }
 
     @Override
-    public void transpose() {
+    public Matrix transpose() {
         int rows = data.length;
         int cols = data[0].length;
         double[][] newData = new double[cols][rows];
@@ -87,7 +87,7 @@ public class RectangleArrayMatrix implements Matrix {
             }
         }
 
-        this.data = newData;
+        return new RectangleArrayMatrix(newData);
     }
 
     @Override

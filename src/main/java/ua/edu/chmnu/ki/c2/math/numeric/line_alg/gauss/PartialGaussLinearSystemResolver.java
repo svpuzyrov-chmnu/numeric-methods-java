@@ -23,24 +23,7 @@ public class PartialGaussLinearSystemResolver implements LinearSystemResolver {
 
         //Gaussian elimination with partial pivoting
         for (int i = 0; i < m1.rows(); i++) {
-            // Find the pivot row
-            int pivotRow = i;
-            for (int j = i + 1; j < m1.rows(); j++) {
-                if (Math.abs(m1.get(j, i)) > Math.abs(m1.get(pivotRow, i))) {
-                    pivotRow = j;
-                }
-            }
-
-            // Swap the current row with the pivot row
-            if (pivotRow > i) {
-                m1.changeRows(i, pivotRow);
-                b1.change(i, pivotRow);
-            }
-
-            // Check for zero pivot element
-            if (Math.abs(m1.get(i, i)) < 1e-10) {
-                throw new LinearSystemException("Matrix is singular or nearly singular");
-            }
+            tryToPivot(m1, b1, i, 1e-10);
 
             // Eliminate the entries below the pivot
             for (int j = i + 1; j < m1.rows(); j++) {

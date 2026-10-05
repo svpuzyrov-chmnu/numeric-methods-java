@@ -12,15 +12,17 @@ public class ArrayVector implements Vector {
         this.data = new double[size];
     }
 
+    public ArrayVector(int size, double initialValue) {
+        this.data = new double[size];
+        Arrays.fill(this.data, initialValue);
+    }
+
     public ArrayVector(double[] data) {
         this.data = data;
     }
 
     public ArrayVector(Vector source) {
-        this.data = new double[source.size()];
-        for (int i = 0; i < source.size(); i++) {
-            this.data[i] = source.get(i);
-        }
+        this.data = Arrays.copyOf(source.toArray(), source.size());
     }
 
     private void checkIndex(int index) {
@@ -56,6 +58,11 @@ public class ArrayVector implements Vector {
     @Override
     public int size() {
         return data.length;
+    }
+
+    @Override
+    public double[] toArray() {
+        return data;
     }
 
     @Override

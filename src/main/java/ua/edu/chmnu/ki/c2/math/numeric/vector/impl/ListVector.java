@@ -52,6 +52,11 @@ public class ListVector implements Vector {
     }
 
     @Override
+    public double[] toArray() {
+        return data.stream().mapToDouble(Double::doubleValue).toArray();
+    }
+
+    @Override
     public Vector copy() {
         return new ListVector(new java.util.ArrayList<>(data));
     }

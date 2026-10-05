@@ -113,13 +113,15 @@ class RectangleArrayMatrixTest {
     void shouldTransposeMatrix(double[][] data) {
         var matrix = new RectangleArrayMatrix(copyOf(data));
 
-        matrix.transpose();
+        var result = matrix.transpose();
 
-        assertEquals(data[0].length, matrix.rows());
-        assertEquals(data.length, matrix.cols());
+        assertEquals(matrix.rows(), result.cols());
+
+        assertEquals(matrix.cols(), result.rows());
+
         for (int row = 0; row < data.length; row++) {
             for (int col = 0; col < data[0].length; col++) {
-                assertEquals(data[row][col], matrix.get(col, row));
+                assertEquals(matrix.get(row, col), result.get(col, row));
             }
         }
     }
