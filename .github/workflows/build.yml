@@ -27,15 +27,20 @@ jobs:
       - name: Build and test
         run: mvn --batch-mode --update-snapshots clean package
 
-      - name: Send telegram message on push
+      - name: Send telegram message
+        if: always()
         uses: appleboy/telegram-action@v1
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-              ${{ github.actor }} created commit:
-              Commit message: ${{ github.event.head_commit.message }}
-              
-              Repository: ${{ github.repository }}
-              
-              See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+            🚀 GitHub Actions
+
+            Repository: ${{ github.repository }}
+            Branch: ${{ github.ref_name }}
+            Commit: ${{ github.sha }}
+            Author: ${{ github.actor }}
+            Status: ${{ job.status }}
+
+            See workflow:
+            https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
