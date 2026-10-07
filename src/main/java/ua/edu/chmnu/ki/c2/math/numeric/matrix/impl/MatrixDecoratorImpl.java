@@ -16,7 +16,7 @@ public class MatrixDecoratorImpl implements MatrixDecorator {
     }
 
     public MatrixDecoratorImpl(Matrix matrix) {
-        this(matrix, MatrixDecorator.createPivotIndices(matrix.rows()));
+        this(matrix, MatrixDecorator.createPivotIndices(matrix.getRows()));
     }
 
     @Override

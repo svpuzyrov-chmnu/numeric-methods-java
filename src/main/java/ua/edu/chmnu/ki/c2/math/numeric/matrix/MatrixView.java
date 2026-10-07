@@ -21,4 +21,9 @@ public interface MatrixView extends Matrix {
     default Matrix transpose() {
         throw new UnsupportedOperationException("Transposing is not supported for LowerRectangleMatrix");
     }
+
+    @Override
+    default Matrix subMatrix(int rowStart, int rowEnd, int colStart, int colEnd) {
+        throw new UnsupportedOperationException("Sub-matrix extraction is not supported for this matrix view.");
+    }
 }

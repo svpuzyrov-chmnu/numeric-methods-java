@@ -15,12 +15,12 @@ public class LUFactorizer implements Factorizer {
 
         var target = new RectangleArrayMatrix(matrix);
 
-        int[] pivotIndices = MatrixDecorator.createPivotIndices(matrix.rows());
+        int[] pivotIndices = MatrixDecorator.createPivotIndices(matrix.getRows());
 
-        for (int i = 0; i < target.rows(); i++) {
+        for (int i = 0; i < target.getRows(); i++) {
             // Pivoting
             int maxRow = i;
-            for (int k = i + 1; k < target.rows(); k++) {
+            for (int k = i + 1; k < target.getRows(); k++) {
                 if (Math.abs(target.get(k, i)) > Math.abs(target.get(maxRow, i))) {
                     maxRow = k;
                 }
@@ -36,10 +36,10 @@ public class LUFactorizer implements Factorizer {
             }
 
             // LU Decomposition
-            for (int j = i + 1; j < target.rows(); j++) {
+            for (int j = i + 1; j < target.getRows(); j++) {
                 double factor = -target.get(j, i) / target.get(i, i);
                 target.set(j, i, factor);
-                for (int k = i + 1; k < target.cols(); k++) {
+                for (int k = i + 1; k < target.getColumns(); k++) {
                     target.set(j, k, target.get(j, k) + factor * target.get(i, k));
                 }
             }

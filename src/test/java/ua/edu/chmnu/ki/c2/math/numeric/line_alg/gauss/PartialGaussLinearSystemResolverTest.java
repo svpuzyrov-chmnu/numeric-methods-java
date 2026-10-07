@@ -98,7 +98,7 @@ class PartialGaussLinearSystemResolverTest {
     }
 
     private static void assertMatrixEquals(double[][] expected, Matrix actual) {
-        assertEquals(expected.length, actual.rows());
+        assertEquals(expected.length, actual.getRows());
         for (int row = 0; row < expected.length; row++) {
             assertArrayEquals(expected[row], valuesOf(actual.getRow(row)));
         }

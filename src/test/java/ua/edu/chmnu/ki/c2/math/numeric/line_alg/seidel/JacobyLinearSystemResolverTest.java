@@ -167,8 +167,8 @@ class JacobyLinearSystemResolverTest {
     }
 
     private static void assertMatrixEquals(double[][] expected, Matrix actual) {
-        assertEquals(expected.length, actual.rows());
-        assertEquals(expected[0].length, actual.cols());
+        assertEquals(expected.length, actual.getRows());
+        assertEquals(expected[0].length, actual.getColumns());
         for (int row = 0; row < expected.length; row++) {
             for (int col = 0; col < expected[row].length; col++) {
                 assertEquals(expected[row][col], actual.get(row, col), TOLERANCE);

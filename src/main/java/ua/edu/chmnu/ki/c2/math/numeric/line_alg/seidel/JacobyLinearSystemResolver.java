@@ -34,7 +34,7 @@ public class JacobyLinearSystemResolver implements LinearSystemResolver {
             throw new IllegalArgumentException("Matrix must be square.");
         }
 
-        if (m.rows() != b.size()) {
+        if (m.getRows() != b.size()) {
             throw new IllegalArgumentException("Incompatible matrix and vector dimensions.");
         }
 
@@ -44,7 +44,7 @@ public class JacobyLinearSystemResolver implements LinearSystemResolver {
 
         Vector b1 = new ArrayVector(b);
 
-        for (int i = 0; i < m.rows(); i++) {
+        for (int i = 0; i < m.getRows(); i++) {
 
             tryToPivot(m1, b1, i, 1e-10);
 
@@ -52,7 +52,7 @@ public class JacobyLinearSystemResolver implements LinearSystemResolver {
 
             m1.set(i, i, 0.0);
 
-            for (int j = 0; j < m.cols(); j++) {
+            for (int j = 0; j < m.getColumns(); j++) {
                 if (i != j) {
                     double value = -m1.get(i, j) / factor;
 

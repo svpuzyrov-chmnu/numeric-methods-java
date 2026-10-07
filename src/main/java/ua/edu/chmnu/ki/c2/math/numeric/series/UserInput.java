@@ -1,7 +1,11 @@
 package ua.edu.chmnu.ki.c2.math.numeric.series;
 
+import lombok.Getter;
+
+import java.util.Locale;
 import java.util.Scanner;
 
+@Getter
 public class UserInput {
     final double tolerance;
     final double x;
@@ -10,14 +14,6 @@ public class UserInput {
     private UserInput(double tolerance, double x) {
         this.tolerance = tolerance;
         this.x = x;
-    }
-
-    public double getTolerance() {
-        return tolerance;
-    }
-
-    public double getX() {
-        return x;
     }
 
     public static Builder builder() {
@@ -32,7 +28,7 @@ public class UserInput {
         private double tolerance = 1.e-3;
 
         public Builder() {
-            this.scanner = new Scanner(System.in);
+            this.scanner = new Scanner(System.in).useLocale(Locale.US);
         }
 
         public Builder withTolerance() {
@@ -54,11 +50,7 @@ public class UserInput {
         }
 
         public UserInput build() {
-            try {
-                return new UserInput(tolerance, x);
-            } finally {
-                this.scanner.close();
-            }
+            return new UserInput(tolerance, x);
         }
     }
 }

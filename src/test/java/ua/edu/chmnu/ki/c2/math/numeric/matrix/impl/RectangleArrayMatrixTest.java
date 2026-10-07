@@ -72,8 +72,8 @@ class RectangleArrayMatrixTest {
     void shouldReportDimensions(double[][] data) {
         var matrix = new RectangleArrayMatrix(copyOf(data));
 
-        assertEquals(data.length, matrix.rows());
-        assertEquals(data[0].length, matrix.cols());
+        assertEquals(data.length, matrix.getRows());
+        assertEquals(data[0].length, matrix.getColumns());
     }
 
     @ParameterizedTest
@@ -115,9 +115,9 @@ class RectangleArrayMatrixTest {
 
         var result = matrix.transpose();
 
-        assertEquals(matrix.rows(), result.cols());
+        assertEquals(matrix.getRows(), result.getColumns());
 
-        assertEquals(matrix.cols(), result.rows());
+        assertEquals(matrix.getColumns(), result.getRows());
 
         for (int row = 0; row < data.length; row++) {
             for (int col = 0; col < data[0].length; col++) {
@@ -151,8 +151,28 @@ class RectangleArrayMatrixTest {
 
         assertEquals(data[0][0], original.get(0, 0));
         assertEquals(data[0][0] + 1.0, copy.get(0, 0));
-        assertEquals(data.length, copy.rows());
-        assertEquals(data[0].length, copy.cols());
+        assertEquals(data.length, copy.getRows());
+        assertEquals(data[0].length, copy.getColumns());
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideSubMatrixCases")
+    void shouldReturnSubMatrix(Matrix matrix, int rowStart, int rowEnd, int colStart, int colEnd, double[][] expected) {
+        Matrix subMatrix = matrix.subMatrix(rowStart, rowEnd, colStart, colEnd);
+
+        assertEquals(expected.length, subMatrix.getRows());
+        assertEquals(expected[0].length, subMatrix.getColumns());
+        for (int row = 0; row < expected.length; row++) {
+            for (int col = 0; col < expected[row].length; col++) {
+                assertEquals(expected[row][col], subMatrix.get(row, col));
+            }
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideInvalidSubMatrixCases")
+    void shouldRejectInvalidSubMatrixRange(Matrix matrix, int rowStart, int rowEnd, int colStart, int colEnd) {
+        assertThrows(MatrixInvalidIndexException.class, () -> matrix.subMatrix(rowStart, rowEnd, colStart, colEnd));
     }
 
     private static Stream<double[][]> provideMatrixData() {
@@ -166,6 +186,40 @@ class RectangleArrayMatrixTest {
                         {-1.0, 0.5, 2.5},
                         {4.0, -3.0, 6.0}
                 }
+        );
+    }
+
+    private static Stream<Arguments> provideSubMatrixCases() {
+        Matrix baseArray = new RectangleArrayMatrix(new double[][]{
+                {1.0, 2.0, 3.0, 4.0},
+                {5.0, 6.0, 7.0, 8.0},
+                {9.0, 10.0, 11.0, 12.0},
+                {13.0, 14.0, 15.0, 16.0}
+        });
+        Matrix baseList = new RectangleListMatrix(new java.util.ArrayList<>() {{
+            add(java.util.List.of(1.0, 2.0, 3.0, 4.0));
+            add(java.util.List.of(5.0, 6.0, 7.0, 8.0));
+            add(java.util.List.of(9.0, 10.0, 11.0, 12.0));
+            add(java.util.List.of(13.0, 14.0, 15.0, 16.0));
+        }});
+
+        return Stream.of(
+                Arguments.of(baseArray, 1, 2, 1, 3, new double[][]{{6.0, 7.0, 8.0}, {10.0, 11.0, 12.0}}),
+                Arguments.of(baseList, 0, 2, 2, 3, new double[][]{{3.0, 4.0}, {7.0, 8.0}, {11.0, 12.0}})
+        );
+    }
+
+    private static Stream<Arguments> provideInvalidSubMatrixCases() {
+        Matrix matrix = new RectangleArrayMatrix(new double[][]{
+                {1.0, 2.0, 3.0},
+                {4.0, 5.0, 6.0}
+        });
+
+        return Stream.of(
+                Arguments.of(matrix, -1, 0, 0, 1),
+                Arguments.of(matrix, 0, 2, 0, 1),
+                Arguments.of(matrix, 0, 1, -1, 1),
+                Arguments.of(matrix, 0, 1, 0, 3)
         );
     }
 
@@ -186,8 +240,8 @@ class RectangleArrayMatrixTest {
     }
 
     private static void assertMatrixEquals(double[][] expected, Matrix actual) {
-        assertEquals(expected.length, actual.rows());
-        assertEquals(expected[0].length, actual.cols());
+        assertEquals(expected.length, actual.getRows());
+        assertEquals(expected[0].length, actual.getColumns());
         for (int row = 0; row < expected.length; row++) {
             for (int col = 0; col < expected[row].length; col++) {
                 assertEquals(expected[row][col], actual.get(row, col));

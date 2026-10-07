@@ -27,21 +27,21 @@ public class MatrixLowerViewImpl implements MatrixView {
     }
 
     @Override
-    public int rows() {
-        return matrix.rows();
+    public int getRows() {
+        return matrix.getRows();
     }
 
     @Override
-    public int cols() {
-        return matrix.cols();
+    public int getColumns() {
+        return matrix.getColumns();
     }
 
     @Override
     public Vector getRow(int i) {
-        var result = new ArrayVector(cols(), 0.0);
+        var result = new ArrayVector(getColumns(), 0.0);
         Vector sourceRow = matrix.getRow(i);
 
-        for (int j = 0; j < cols() && j <= i; j++) {
+        for (int j = 0; j < getColumns() && j <= i; j++) {
             result.set(j, j == i ? 1.0 : -sourceRow.get(j));
         }
 
@@ -50,10 +50,10 @@ public class MatrixLowerViewImpl implements MatrixView {
 
     @Override
     public Vector getCol(int j) {
-        var result = new ArrayVector(rows(), 0.0);
+        var result = new ArrayVector(getRows(), 0.0);
         Vector sourceCol = matrix.getCol(j);
 
-        for (int i = Math.max(j, 0); i < rows(); i++) {
+        for (int i = Math.max(j, 0); i < getRows(); i++) {
             result.set(i, i == j ? 1.0 : -sourceCol.get(i));
         }
 

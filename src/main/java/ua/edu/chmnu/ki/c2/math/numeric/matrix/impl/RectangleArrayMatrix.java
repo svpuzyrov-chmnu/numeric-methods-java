@@ -16,9 +16,9 @@ public class RectangleArrayMatrix implements Matrix {
     }
 
     public RectangleArrayMatrix(Matrix source) {
-        this.data = new double[source.rows()][source.cols()];
-        for (int i = 0; i < source.rows(); i++) {
-            this.data[i] = Arrays.copyOf(source.getRow(i).toArray(), source.cols());
+        this.data = new double[source.getRows()][source.getColumns()];
+        for (int i = 0; i < source.getRows(); i++) {
+            this.data[i] = Arrays.copyOf(source.getRow(i).toArray(), source.getColumns());
         }
     }
 
@@ -44,12 +44,12 @@ public class RectangleArrayMatrix implements Matrix {
     }
 
     @Override
-    public int rows() {
+    public int getRows() {
         return data.length;
     }
 
     @Override
-    public int cols() {
+    public int getColumns() {
         return data[0].length;
     }
 
@@ -99,19 +99,34 @@ public class RectangleArrayMatrix implements Matrix {
     @Override
     public Vector getCol(int j) {
         checkIndex(0, j);
-        double[] col = new double[rows()];
-        for (int i = 0; i < rows(); i++) {
+        double[] col = new double[getRows()];
+        for (int i = 0; i < getRows(); i++) {
             col[i] = data[i][j];
         }
         return new ArrayVector(col);
     }
 
     @Override
+    public Matrix subMatrix(int rowStart, int rowEnd, int colStart, int colEnd) {
+        checkIndex(rowStart, colStart);
+        checkIndex(rowEnd, colEnd);
+
+        double[][] subData = new double[rowEnd - rowStart + 1][colEnd - colStart + 1];
+
+        for (int i = rowStart; i <= rowEnd; i++) {
+            if (colEnd + 1 - colStart >= 0)
+                System.arraycopy(data[i], colStart, subData[i - rowStart], 0, colEnd + 1 - colStart);
+        }
+
+        return new RectangleArrayMatrix(subData);
+    }
+
+    @Override
     public Matrix copy() {
-        double[][] newData = new double[rows()][cols()];
-        for (int i = 0; i < rows(); i++) {
-            if (cols() >= 0) {
-                System.arraycopy(data[i], 0, newData[i], 0, cols());
+        double[][] newData = new double[getRows()][getColumns()];
+        for (int i = 0; i < getRows(); i++) {
+            if (getColumns() >= 0) {
+                System.arraycopy(data[i], 0, newData[i], 0, getColumns());
             }
         }
         return new RectangleArrayMatrix(newData);

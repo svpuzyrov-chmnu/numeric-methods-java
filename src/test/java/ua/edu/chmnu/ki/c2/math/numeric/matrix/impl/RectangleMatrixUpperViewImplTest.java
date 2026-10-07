@@ -25,8 +25,8 @@ class RectangleMatrixUpperViewImplTest {
     void shouldPreserveDimensionsAndSquareStatus(double[][] data, int rows, int cols, boolean square) {
         var view = upperView(new RectangleArrayMatrix(data));
 
-        assertEquals(rows, view.rows());
-        assertEquals(cols, view.cols());
+        assertEquals(rows, view.getRows());
+        assertEquals(cols, view.getColumns());
         assertEquals(square, view.isSquare());
     }
 

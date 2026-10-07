@@ -9,9 +9,9 @@ public interface Matrix extends Copyable<Matrix> {
 
     void set(int i, int j, double value);
 
-    int rows();
+    int getRows();
 
-    int cols();
+    int getColumns();
 
     void changeRows(int from, int to);
 
@@ -23,17 +23,19 @@ public interface Matrix extends Copyable<Matrix> {
 
     Vector getCol(int j);
 
+    Matrix subMatrix(int rowStart, int rowEnd, int colStart, int colEnd);
+
     default boolean isSquare() {
-        return rows() == cols();
+        return getRows() == getColumns();
     }
 
     default boolean equals(Matrix other, double tolerance) {
-        if (this.rows() != other.rows() || this.cols() != other.cols()) {
+        if (this.getRows() != other.getRows() || this.getColumns() != other.getColumns()) {
             return false;
         }
 
-        for (int i = 0; i < rows(); i++) {
-            for (int j = 0; j < cols(); j++) {
+        for (int i = 0; i < getRows(); i++) {
+            for (int j = 0; j < getColumns(); j++) {
                 if (Math.abs(this.get(i, j) - other.get(i, j)) > tolerance) {
                     return false;
                 }
@@ -46,16 +48,16 @@ public interface Matrix extends Copyable<Matrix> {
     default String stringView() {
         StringBuilder sb = new StringBuilder();
         sb.append("[");
-        for (int i = 0; i < rows(); i++) {
+        for (int i = 0; i < getRows(); i++) {
             sb.append("[");
-            for (int j = 0; j < cols(); j++) {
+            for (int j = 0; j < getColumns(); j++) {
                 sb.append(get(i, j));
-                if (j < cols() - 1) {
+                if (j < getColumns() - 1) {
                     sb.append(", ");
                 }
             }
             sb.append("]");
-            if (i < rows() - 1) {
+            if (i < getRows() - 1) {
                 sb.append(", ");
             }
         }
@@ -68,8 +70,8 @@ public interface Matrix extends Copyable<Matrix> {
             return false;
         }
 
-        for (int i = 0; i < rows(); i++) {
-            for (int j = 0; j < cols(); j++) {
+        for (int i = 0; i < getRows(); i++) {
+            for (int j = 0; j < getColumns(); j++) {
                 if (get(i, j) != get(j, i)) {
                     return false;
                 }
@@ -82,7 +84,7 @@ public interface Matrix extends Copyable<Matrix> {
     default int finPivotRowFor(int row) {
         int pivotRow = row;
 
-        for (int j = row + 1; j < rows(); j++) {
+        for (int j = row + 1; j < getRows(); j++) {
             if (Math.abs(get(j, row)) > Math.abs(get(pivotRow, row))) {
                 pivotRow = j;
             }

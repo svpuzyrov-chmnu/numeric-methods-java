@@ -23,21 +23,21 @@ public class MatrixUpperViewImpl implements MatrixView {
     }
 
     @Override
-    public int rows() {
-        return matrix.rows();
+    public int getRows() {
+        return matrix.getRows();
     }
 
     @Override
-    public int cols() {
-        return matrix.cols();
+    public int getColumns() {
+        return matrix.getColumns();
     }
 
     @Override
     public Vector getRow(int i) {
-        var result = new ArrayVector(cols(), 0.0);
+        var result = new ArrayVector(getColumns(), 0.0);
         Vector sourceRow = matrix.getRow(i);
 
-        for (int j = Math.max(i, 0); j < cols(); j++) {
+        for (int j = Math.max(i, 0); j < getColumns(); j++) {
             result.set(j, sourceRow.get(j));
         }
 
@@ -46,10 +46,10 @@ public class MatrixUpperViewImpl implements MatrixView {
 
     @Override
     public Vector getCol(int j) {
-        var result = new ArrayVector(rows(), 0.0);
+        var result = new ArrayVector(getRows(), 0.0);
         Vector sourceCol = matrix.getCol(j);
 
-        for (int i = 0; i < rows() && i <= j; i++) {
+        for (int i = 0; i < getRows() && i <= j; i++) {
             result.set(i, sourceCol.get(i));
         }
 
