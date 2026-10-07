@@ -1,8 +1,9 @@
-package ua.edu.chmnu.ki.c2.math.numeric.line_alg.seidel;
+package ua.edu.chmnu.ki.c2.math.numeric.line_alg.jacoby;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import ua.edu.chmnu.ki.c2.math.numeric.line_alg.AbstractLinearSystemResolverTest;
 import ua.edu.chmnu.ki.c2.math.numeric.line_alg.gauss.exception.LinearSystemException;
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.Matrix;
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.impl.RectangleArrayMatrix;
@@ -13,7 +14,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class JacobyLinearSystemResolverTest {
+class JacobyLinearSystemResolverTest extends AbstractLinearSystemResolverTest {
 
     private static final double TOLERANCE = 1e-8;
 
@@ -101,7 +102,7 @@ class JacobyLinearSystemResolverTest {
 
         assertArrayEquals(expected, actual.toArray(), TOLERANCE);
         assertResidualWithinTolerance(coefficients, rhs, actual.toArray(), 1e-6);
-        assertMatrixEquals(coefficients, matrix);
+        assertMatrixEquals(coefficients, matrix, 1e-6);
         assertArrayEquals(rhs, vector.toArray());
     }
 
@@ -144,7 +145,9 @@ class JacobyLinearSystemResolverTest {
                 new RectangleArrayMatrix(copyOf(coefficients)),
                 new ArrayVector(rhs.clone())
         );
+
         int firstCallIterations = resolver.getCountIterations();
+
         Vector second = resolver.resolve(
                 new RectangleArrayMatrix(copyOf(coefficients)),
                 new ArrayVector(rhs.clone())
@@ -154,33 +157,5 @@ class JacobyLinearSystemResolverTest {
         assertArrayEquals(expected, second.toArray(), TOLERANCE);
         assertTrue(firstCallIterations > 0);
         assertEquals(firstCallIterations, resolver.getCountIterations());
-    }
-
-    private static void assertResidualWithinTolerance(double[][] coefficients, double[] rhs, double[] solution, double tolerance) {
-        for (int row = 0; row < coefficients.length; row++) {
-            double value = 0.0;
-            for (int col = 0; col < coefficients[row].length; col++) {
-                value += coefficients[row][col] * solution[col];
-            }
-            assertEquals(rhs[row], value, tolerance, "Residual at row " + row);
-        }
-    }
-
-    private static void assertMatrixEquals(double[][] expected, Matrix actual) {
-        assertEquals(expected.length, actual.getRows());
-        assertEquals(expected[0].length, actual.getColumns());
-        for (int row = 0; row < expected.length; row++) {
-            for (int col = 0; col < expected[row].length; col++) {
-                assertEquals(expected[row][col], actual.get(row, col), TOLERANCE);
-            }
-        }
-    }
-
-    private static double[][] copyOf(double[][] values) {
-        double[][] copy = new double[values.length][];
-        for (int row = 0; row < values.length; row++) {
-            copy[row] = values[row].clone();
-        }
-        return copy;
     }
 }

@@ -100,7 +100,6 @@
             <properties>
                 <maven.compiler.release>25</maven.compiler.release>
                 <maven.compiler.enablePreview>true</maven.compiler.enablePreview>
-                <maven.surefire.argLine>--enable-preview</maven.surefire.argLine>
             </properties>
         </profile>
         <profile>

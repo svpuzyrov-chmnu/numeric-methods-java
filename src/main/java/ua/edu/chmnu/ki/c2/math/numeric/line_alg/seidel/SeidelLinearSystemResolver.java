@@ -10,18 +10,18 @@ import ua.edu.chmnu.ki.c2.math.numeric.vector.impl.ArrayVector;
 import ua.edu.chmnu.ki.c2.math.numeric.vector.impl.ArrayVectorOperation;
 
 @Getter
-public class JacobyLinearSystemResolver implements LinearSystemResolver {
+public class SeidelLinearSystemResolver implements LinearSystemResolver {
     private final static int MAX_ITERATIONS = 10_000;
 
     private final double tolerance;
 
     private int countIterations = 0;
 
-    public JacobyLinearSystemResolver() {
+    public SeidelLinearSystemResolver() {
         this.tolerance = 1e-10;
     }
 
-    public JacobyLinearSystemResolver(double tolerance) {
+    public SeidelLinearSystemResolver(double tolerance) {
         this.tolerance = tolerance;
         if (!Double.isFinite(this.tolerance) || this.tolerance <= 0.0 || this.tolerance > 1.0) {
             throw new IllegalArgumentException("Tolerance must be in the range [0, 1]");
@@ -71,7 +71,11 @@ public class JacobyLinearSystemResolver implements LinearSystemResolver {
 
             for (int i = 0; i < b1.size(); i++) {
                 var sum = 0.0;
-                for (int j = 0; j < b1.size(); j++) {
+                for (int j = 0; j < i; j++) {
+                    sum += m1.get(i, j) * xNext.get(j);
+                }
+
+                for (int j = i + 1; j < b1.size(); j++) {
                     if (i != j) {
                         sum += m1.get(i, j) * xCurrent.get(j);
                     }
