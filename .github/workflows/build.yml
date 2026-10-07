@@ -28,20 +28,76 @@ jobs:
       - name: Build and test
         run: mvn --batch-mode --update-snapshots clean package
 
-      - name: Send telegram message
-        if: always()
+  notify:
+    name: Notify Telegram
+    runs-on: ubuntu-latest
+    environment: common
+
+    needs: build
+    if: always()
+
+    steps:
+      - name: Get build job results
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          curl --fail-with-body \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${REPOSITORY}/actions/runs/${RUN_ID}/jobs?per_page=100" \
+            > jobs.json
+
+      - name: Create Telegram message
+        shell: bash
+        run: |
+          {
+            echo "🚀 GitHub Actions"
+            echo ""
+            echo "Repository: ${{ github.repository }}"
+            echo "Branch: ${{ github.ref_name }}"
+            echo "Author: ${{ github.actor }}"
+            echo ""
+            echo "Build results:"
+            echo ""
+          
+            for java in 17 21 24 25 26; do
+              result=$(jq -r \
+                --arg name "Java ${java}" \
+                '.jobs[] | select(.name == $name) | .conclusion' \
+                jobs.json)
+          
+              case "$result" in
+                success)
+                  echo "Java ${java}: ✅ SUCCESS"
+                  ;;
+                failure)
+                  echo "Java ${java}: ❌ FAILURE"
+                  ;;
+                cancelled)
+                  echo "Java ${java}: ⚠️ CANCELLED"
+                  ;;
+                skipped)
+                  echo "Java ${java}: ⏭️ SKIPPED"
+                  ;;
+                *)
+                  echo "Java ${java}: ❓ ${result}"
+                  ;;
+              esac
+            done
+          
+            echo ""
+            echo "See workflow:"
+            echo "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          } > message.txt
+          
+          cat message.txt
+
+      - name: Send Telegram message
         uses: appleboy/telegram-action@v1
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          message: |
-            🚀 GitHub Actions
-
-            Repository: ${{ github.repository }}
-            Branch: ${{ github.ref_name }}
-            Commit: ${{ github.sha }}
-            Author: ${{ github.actor }}
-            Status: ${{ job.status }}
-
-            See workflow:
-            https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          message_file: message.txt
