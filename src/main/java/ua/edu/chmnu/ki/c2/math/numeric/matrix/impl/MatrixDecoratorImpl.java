@@ -2,7 +2,9 @@ package ua.edu.chmnu.ki.c2.math.numeric.matrix.impl;
 
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.Matrix;
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.MatrixDecorator;
-import ua.edu.chmnu.ki.c2.math.numeric.matrix.MatrixView;
+import ua.edu.chmnu.ki.c2.math.numeric.matrix.view.MatrixLowerView;
+import ua.edu.chmnu.ki.c2.math.numeric.matrix.view.MatrixUpperView;
+import ua.edu.chmnu.ki.c2.math.numeric.matrix.view.MatrixView;
 
 public class MatrixDecoratorImpl implements MatrixDecorator {
 
@@ -21,12 +23,12 @@ public class MatrixDecoratorImpl implements MatrixDecorator {
 
     @Override
     public MatrixView getLower() {
-        return new MatrixLowerViewImpl(matrix);
+        return new MatrixLowerView(matrix);
     }
 
     @Override
     public MatrixView getUpper() {
-        return new MatrixUpperViewImpl(matrix);
+        return new MatrixUpperView(matrix);
     }
 
     @Override

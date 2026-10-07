@@ -131,7 +131,7 @@ class JacobyLinearSystemResolverTest extends AbstractLinearSystemResolverTest {
     @ParameterizedTest
     @MethodSource("provideNonConvergentSystems")
     void shouldReportNonConvergence(double[][] coefficients, double[] rhs) {
-        assertThrows(IllegalStateException.class, () -> new JacobyLinearSystemResolver(TOLERANCE).resolve(
+        assertThrows(LinearSystemException.class, () -> new JacobyLinearSystemResolver(TOLERANCE).resolve(
                 new RectangleArrayMatrix(copyOf(coefficients)),
                 new ArrayVector(rhs.clone())
         ));

@@ -132,7 +132,7 @@ class SeidelLinearSystemResolverTest extends AbstractLinearSystemResolverTest {
     @ParameterizedTest
     @MethodSource("provideNonConvergentSystems")
     void shouldReportNonConvergence(double[][] coefficients, double[] rhs) {
-        assertThrows(IllegalStateException.class, () -> seidelLinearSystemResolver.resolve(
+        assertThrows(LinearSystemException.class, () -> seidelLinearSystemResolver.resolve(
                 new RectangleArrayMatrix(copyOf(coefficients)),
                 new ArrayVector(rhs.clone())
         ));

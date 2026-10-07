@@ -1,12 +1,12 @@
-package ua.edu.chmnu.ki.c2.math.numeric.matrix.impl;
+package ua.edu.chmnu.ki.c2.math.numeric.matrix.operation;
 
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.Matrix;
-import ua.edu.chmnu.ki.c2.math.numeric.matrix.MatrixOperation;
+import ua.edu.chmnu.ki.c2.math.numeric.matrix.impl.RectangleArrayMatrix;
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.exception.MatrixInvalidISizeException;
 import ua.edu.chmnu.ki.c2.math.numeric.vector.Vector;
 import ua.edu.chmnu.ki.c2.math.numeric.vector.impl.ArrayVector;
 
-public class RectangleArrayMatrixOperation implements MatrixOperation {
+public class RectangleMatrixArrayOperation implements MatrixOperation {
     @Override
     public Matrix add(Matrix m1, Matrix m2) {
         var result = new double[Math.min(m1.getRows(), m2.getRows())][Math.min(m1.getColumns(), m2.getColumns())];

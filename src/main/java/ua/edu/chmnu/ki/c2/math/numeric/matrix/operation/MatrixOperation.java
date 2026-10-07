@@ -1,5 +1,6 @@
-package ua.edu.chmnu.ki.c2.math.numeric.matrix;
+package ua.edu.chmnu.ki.c2.math.numeric.matrix.operation;
 
+import ua.edu.chmnu.ki.c2.math.numeric.matrix.Matrix;
 import ua.edu.chmnu.ki.c2.math.numeric.vector.Vector;
 
 public interface MatrixOperation {

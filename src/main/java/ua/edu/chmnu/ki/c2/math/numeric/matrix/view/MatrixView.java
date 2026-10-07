@@ -1,4 +1,6 @@
-package ua.edu.chmnu.ki.c2.math.numeric.matrix;
+package ua.edu.chmnu.ki.c2.math.numeric.matrix.view;
+
+import ua.edu.chmnu.ki.c2.math.numeric.matrix.Matrix;
 
 public interface MatrixView extends Matrix {
 

@@ -1,5 +1,7 @@
 package ua.edu.chmnu.ki.c2.math.numeric.matrix;
 
+import ua.edu.chmnu.ki.c2.math.numeric.matrix.view.MatrixView;
+
 public interface MatrixDecorator {
     MatrixView getLower();
 

@@ -5,6 +5,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.Matrix;
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.exception.MatrixInvalidISizeException;
+import ua.edu.chmnu.ki.c2.math.numeric.matrix.operation.RectangleMatrixArrayOperation;
 import ua.edu.chmnu.ki.c2.math.numeric.vector.Vector;
 import ua.edu.chmnu.ki.c2.math.numeric.vector.impl.ArrayVector;
 
@@ -12,9 +13,9 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RectangleArrayMatrixOperationTest {
+class RectangleMatrixArrayOperationTest {
 
-    private final RectangleArrayMatrixOperation operation = new RectangleArrayMatrixOperation();
+    private final RectangleMatrixArrayOperation operation = new RectangleMatrixArrayOperation();
 
     private static Stream<Arguments> provideBinaryMatrixOperations() {
         return Stream.of(

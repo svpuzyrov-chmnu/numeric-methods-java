@@ -1,29 +1,24 @@
-package ua.edu.chmnu.ki.c2.math.numeric.matrix.impl;
+package ua.edu.chmnu.ki.c2.math.numeric.matrix.view;
 
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.Matrix;
-import ua.edu.chmnu.ki.c2.math.numeric.matrix.MatrixView;
 import ua.edu.chmnu.ki.c2.math.numeric.vector.Vector;
 import ua.edu.chmnu.ki.c2.math.numeric.vector.impl.ArrayVector;
 
-public class MatrixLowerViewImpl implements MatrixView {
+public class MatrixUpperView implements MatrixView {
     private final Matrix matrix;
 
-    public MatrixLowerViewImpl(Matrix matrix) {
+    public MatrixUpperView(Matrix matrix) {
         this.matrix = matrix;
     }
 
     @Override
     public double get(int i, int j) {
         double value = matrix.get(i, j);
-        if (i < j) {
+        if (i > j) {
             return 0.0;
         }
 
-        if (i == j) {
-            return 1.0;
-        }
-
-        return -value;
+        return value;
     }
 
     @Override
@@ -41,8 +36,8 @@ public class MatrixLowerViewImpl implements MatrixView {
         var result = new ArrayVector(getColumns(), 0.0);
         Vector sourceRow = matrix.getRow(i);
 
-        for (int j = 0; j < getColumns() && j <= i; j++) {
-            result.set(j, j == i ? 1.0 : -sourceRow.get(j));
+        for (int j = Math.max(i, 0); j < getColumns(); j++) {
+            result.set(j, sourceRow.get(j));
         }
 
         return result;
@@ -53,8 +48,8 @@ public class MatrixLowerViewImpl implements MatrixView {
         var result = new ArrayVector(getRows(), 0.0);
         Vector sourceCol = matrix.getCol(j);
 
-        for (int i = Math.max(j, 0); i < getRows(); i++) {
-            result.set(i, i == j ? 1.0 : -sourceCol.get(i));
+        for (int i = 0; i < getRows() && i <= j; i++) {
+            result.set(i, sourceCol.get(i));
         }
 
         return result;
@@ -67,6 +62,6 @@ public class MatrixLowerViewImpl implements MatrixView {
 
     @Override
     public Matrix copy() {
-        throw new UnsupportedOperationException("Copying a lower rectangle matrix view is not supported.");
+        throw new UnsupportedOperationException("Copying an upper rectangle matrix view is not supported.");
     }
 }

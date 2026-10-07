@@ -5,12 +5,13 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.Matrix;
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.exception.MatrixInvalidIndexException;
+import ua.edu.chmnu.ki.c2.math.numeric.matrix.view.MatrixLowerView;
 
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RectangleMatrixLowerViewImplTest {
+class RectangleMatrixLowerViewTest {
 
     @ParameterizedTest
     @MethodSource("provideCellValues")
@@ -127,8 +128,8 @@ class RectangleMatrixLowerViewImplTest {
         );
     }
 
-    private static MatrixLowerViewImpl lowerView(Matrix matrix) {
-        return new MatrixLowerViewImpl(matrix);
+    private static MatrixLowerView lowerView(Matrix matrix) {
+        return new MatrixLowerView(matrix);
     }
 
     private static RectangleArrayMatrix squareMatrix() {

@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.Matrix;
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.MatrixDecorator;
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.impl.RectangleArrayMatrix;
-import ua.edu.chmnu.ki.c2.math.numeric.matrix.impl.RectangleArrayMatrixOperation;
+import ua.edu.chmnu.ki.c2.math.numeric.matrix.operation.RectangleMatrixArrayOperation;
 
 import java.util.stream.Stream;
 
@@ -126,7 +126,7 @@ class LUFactorizerTest {
             permutationData[row][inversePivots[row]] = 1.0;
         }
 
-        RectangleArrayMatrixOperation operation = new RectangleArrayMatrixOperation();
+        RectangleMatrixArrayOperation operation = new RectangleMatrixArrayOperation();
         Matrix permutation = new RectangleArrayMatrix(permutationData);
         Matrix reconstructed = operation.mul(operation.mul(permutation, lower), upper);
 

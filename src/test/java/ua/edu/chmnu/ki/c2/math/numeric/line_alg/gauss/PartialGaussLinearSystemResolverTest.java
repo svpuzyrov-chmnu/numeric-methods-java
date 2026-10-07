@@ -95,11 +95,25 @@ class PartialGaussLinearSystemResolverTest {
 
     @ParameterizedTest
     @MethodSource("provideSystemsFromFiles")
-    void shouldResolveSystemReadFromFile(String fileName, Vector expected) throws IOException {
+    void shouldResolveSystemReadFromFileUsingRectangleArrayReader(String fileName, Vector expected) throws IOException {
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(fileName)) {
             assertNotNull(inputStream);
 
             ExtendedMatrix system = MatrixReaders.createRectangleMatrixArrayReader().readExtendedMatrixFrom(inputStream);
+
+            Vector actual = resolver.resolve(system);
+
+            assertArrayEquals(expected.toArray(), valuesOf(actual), 1e-9);
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideSystemsFromFiles")
+    void shouldResolveSystemReadFromFileUsingRectangleListReader(String fileName, Vector expected) throws IOException {
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(fileName)) {
+            assertNotNull(inputStream);
+
+            ExtendedMatrix system = MatrixReaders.createRectangleMatrixListReader().readExtendedMatrixFrom(inputStream);
 
             Vector actual = resolver.resolve(system);
 
