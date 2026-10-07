@@ -4,11 +4,15 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import ua.edu.chmnu.ki.c2.math.numeric.line_alg.gauss.exception.LinearSystemException;
+import ua.edu.chmnu.ki.c2.math.numeric.matrix.ExtendedMatrix;
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.Matrix;
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.impl.RectangleArrayMatrix;
+import ua.edu.chmnu.ki.c2.math.numeric.matrix.reader.MatrixReaders;
 import ua.edu.chmnu.ki.c2.math.numeric.vector.Vector;
 import ua.edu.chmnu.ki.c2.math.numeric.vector.impl.ArrayVector;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -87,6 +91,27 @@ class PartialGaussLinearSystemResolverTest {
         );
 
         assertEquals(expectedMessage, exception.getMessage());
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideSystemsFromFiles")
+    void shouldResolveSystemReadFromFile(String fileName, Vector expected) throws IOException {
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(fileName)) {
+            assertNotNull(inputStream);
+
+            ExtendedMatrix system = MatrixReaders.createRectangleMatrixArrayReader().readExtendedMatrixFrom(inputStream);
+
+            Vector actual = resolver.resolve(system);
+
+            assertArrayEquals(expected.toArray(), valuesOf(actual), 1e-9);
+        }
+    }
+
+    private static Stream<Arguments> provideSystemsFromFiles() {
+        return Stream.of(
+                Arguments.of("linear-system-2x2.txt", new ArrayVector(new double[]{2.0, 1.0})),
+                Arguments.of("linear-system-3x3.txt", new ArrayVector(new double[]{2.0, -1.0, 3.0}))
+        );
     }
 
     private static double[] valuesOf(Vector vector) {
