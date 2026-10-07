@@ -60,6 +60,22 @@ jobs:
             echo "Branch: ${{ github.ref_name }}"
             echo "Author: ${{ github.actor }}"
             echo ""
+          
+            if [ "${{ github.event_name }}" = "pull_request" ]; then
+              echo "Pull Request:"
+              echo "${{ github.event.pull_request.title }}"
+              echo ""
+
+              if [ -n "${{ github.event.pull_request.body }}" ]; then
+                echo "${{ github.event.pull_request.body }}"
+                echo ""
+              fi
+            else
+              echo "Commit message:"
+              echo "${{ github.event.head_commit.message }}"
+              echo ""
+            fi
+          
             echo "Build results:"
             echo ""
           
