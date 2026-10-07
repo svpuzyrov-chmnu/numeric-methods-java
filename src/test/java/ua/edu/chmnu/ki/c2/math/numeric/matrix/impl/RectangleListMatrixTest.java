@@ -56,7 +56,7 @@ class RectangleListMatrixTest {
         var matrix = new RectangleListMatrix(copyOf(data));
 
         assertEquals(data.size(), matrix.getRows());
-        assertEquals(data.getFirst().size(), matrix.getColumns());
+        assertEquals(data.get(0).size(), matrix.getColumns());
     }
 
     @ParameterizedTest
@@ -68,7 +68,7 @@ class RectangleListMatrixTest {
         matrix.changeRows(0, lastRow);
 
         List<List<Double>> expected = copyOf(data);
-        var temp = expected.getFirst();
+        var temp = expected.get(0);
         expected.set(0, expected.get(lastRow));
         expected.set(lastRow, temp);
         assertMatrixEquals(expected, matrix);
@@ -78,13 +78,13 @@ class RectangleListMatrixTest {
     @MethodSource("provideMatrixData")
     void shouldSwapColumns(List<List<Double>> data) {
         var matrix = new RectangleListMatrix(copyOf(data));
-        int lastColumn = data.getFirst().size() - 1;
+        int lastColumn = data.get(0).size() - 1;
 
         matrix.changeColumns(0, lastColumn);
 
         List<List<Double>> expected = copyOf(data);
         for (int row = 0; row < data.size(); row++) {
-            double temp = expected.get(row).getFirst();
+            double temp = expected.get(row).get(0);
             expected.get(row).set(0, expected.get(row).get(lastColumn));
             expected.get(row).set(lastColumn, temp);
         }
@@ -102,7 +102,7 @@ class RectangleListMatrixTest {
         assertEquals(matrix.getColumns(), result.getRows());
 
         for (int row = 0; row < data.size(); row++) {
-            for (int col = 0; col < data.getFirst().size(); col++) {
+            for (int col = 0; col < data.get(0).size(); col++) {
                 assertEquals(matrix.get(row, col), result.get(col, row));
             }
         }
@@ -115,7 +115,7 @@ class RectangleListMatrixTest {
         Vector row = matrix.getRow(1);
         Vector col = matrix.getCol(1);
 
-        for (int index = 0; index < data.getFirst().size(); index++) {
+        for (int index = 0; index < data.get(0).size(); index++) {
             assertEquals(data.get(1).get(index), row.get(index));
         }
         for (int index = 0; index < data.size(); index++) {
@@ -131,10 +131,10 @@ class RectangleListMatrixTest {
 
         copy.set(0, 0, copy.get(0, 0) + 1.0);
 
-        assertEquals(data.getFirst().getFirst(), original.get(0, 0));
-        assertEquals(data.getFirst().getFirst() + 1.0, copy.get(0, 0));
+        assertEquals(data.get(0).get(0), original.get(0, 0));
+        assertEquals(data.get(0).get(0) + 1.0, copy.get(0, 0));
         assertEquals(data.size(), copy.getRows());
-        assertEquals(data.getFirst().size(), copy.getColumns());
+        assertEquals(data.get(0).size(), copy.getColumns());
     }
 
     @ParameterizedTest
@@ -145,7 +145,7 @@ class RectangleListMatrixTest {
         var subMatrix = matrix.subMatrix(rowStart, rowEnd, colStart, colEnd);
 
         assertEquals(expected.size(), subMatrix.getRows());
-        assertEquals(expected.getFirst().size(), subMatrix.getColumns());
+        assertEquals(expected.get(0).size(), subMatrix.getColumns());
         for (int row = 0; row < expected.size(); row++) {
             for (int col = 0; col < expected.get(row).size(); col++) {
                 assertEquals(expected.get(row).get(col), subMatrix.get(row, col));
@@ -252,7 +252,7 @@ class RectangleListMatrixTest {
 
     private static void assertMatrixEquals(List<List<Double>> expected, Matrix actual) {
         assertEquals(expected.size(), actual.getRows());
-        assertEquals(expected.getFirst().size(), actual.getColumns());
+        assertEquals(expected.get(0).size(), actual.getColumns());
         for (int row = 0; row < expected.size(); row++) {
             for (int col = 0; col < expected.get(row).size(); col++) {
                 assertEquals(expected.get(row).get(col), actual.get(row, col));

@@ -36,8 +36,8 @@ public class RectangleListMatrix implements Matrix {
         if (i < 0 || i >= data.size()) {
             throw new MatrixInvalidIndexException(new IndexOutOfBoundsException("Row index " + i + " is out of bounds for length " + data.size()), i, j);
         }
-        if (j < 0 || j >= data.getFirst().size()) {
-            throw new MatrixInvalidIndexException(new IndexOutOfBoundsException("Column index " + j + " is out of bounds for length " + data.getFirst().size()), i, j);
+        if (j < 0 || j >= data.get(0).size()) {
+            throw new MatrixInvalidIndexException(new IndexOutOfBoundsException("Column index " + j + " is out of bounds for length " + data.get(0).size()), i, j);
         }
     }
 
@@ -60,7 +60,7 @@ public class RectangleListMatrix implements Matrix {
 
     @Override
     public int getColumns() {
-        return data.getFirst().size();
+        return data.get(0).size();
     }
 
     @Override
@@ -90,7 +90,7 @@ public class RectangleListMatrix implements Matrix {
     @Override
     public Matrix transpose() {
         int rows = data.size();
-        int cols = data.getFirst().size();
+        int cols = data.get(0).size();
 
         List<List<Double>> result = new ArrayList<>(cols);
 
