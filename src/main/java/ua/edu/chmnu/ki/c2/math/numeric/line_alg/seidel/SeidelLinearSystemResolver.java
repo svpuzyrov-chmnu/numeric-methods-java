@@ -93,6 +93,6 @@ public class SeidelLinearSystemResolver implements LinearSystemResolver {
             xCurrent = xNext;
         }
 
-        throw new IllegalStateException("Seidel method did not converge.");
+        throw new LayerInstantiationException("Seidel method did not converge.");
     }
 }

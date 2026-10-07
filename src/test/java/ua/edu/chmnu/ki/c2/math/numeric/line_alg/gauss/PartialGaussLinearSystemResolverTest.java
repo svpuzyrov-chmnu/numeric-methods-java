@@ -3,7 +3,7 @@ package ua.edu.chmnu.ki.c2.math.numeric.line_alg.gauss;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import ua.edu.chmnu.ki.c2.math.numeric.line_alg.gauss.exception.LinearSystemException;
+import ua.edu.chmnu.ki.c2.math.numeric.line_alg.exception.LinearSystemException;
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.ExtendedMatrix;
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.Matrix;
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.impl.RectangleArrayMatrix;

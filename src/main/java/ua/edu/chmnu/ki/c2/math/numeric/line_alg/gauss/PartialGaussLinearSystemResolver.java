@@ -1,7 +1,7 @@
 package ua.edu.chmnu.ki.c2.math.numeric.line_alg.gauss;
 
 import ua.edu.chmnu.ki.c2.math.numeric.line_alg.LinearSystemResolver;
-import ua.edu.chmnu.ki.c2.math.numeric.line_alg.gauss.exception.LinearSystemException;
+import ua.edu.chmnu.ki.c2.math.numeric.line_alg.exception.LinearSystemException;
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.Matrix;
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.impl.RectangleArrayMatrix;
 import ua.edu.chmnu.ki.c2.math.numeric.vector.Vector;

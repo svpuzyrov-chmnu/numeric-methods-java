@@ -2,6 +2,7 @@ package ua.edu.chmnu.ki.c2.math.numeric.line_alg.jacoby;
 
 import lombok.Getter;
 import ua.edu.chmnu.ki.c2.math.numeric.line_alg.LinearSystemResolver;
+import ua.edu.chmnu.ki.c2.math.numeric.line_alg.exception.LinearSystemException;
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.Matrix;
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.impl.RectangleArrayMatrix;
 import ua.edu.chmnu.ki.c2.math.numeric.vector.Vector;
@@ -89,6 +90,6 @@ public class JacobyLinearSystemResolver implements LinearSystemResolver {
             xCurrent = xNext;
         }
 
-        throw new IllegalStateException("Jacoby iteration method did not converge.");
+        throw new LinearSystemException("Jacoby iteration method did not converge.");
     }
 }
