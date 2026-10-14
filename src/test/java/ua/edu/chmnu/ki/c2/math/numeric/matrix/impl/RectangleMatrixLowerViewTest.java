@@ -55,7 +55,7 @@ class RectangleMatrixLowerViewTest {
     private static Stream<Arguments> provideCellValues() {
         return Stream.of(
                 Arguments.of(0, 0, 1.0),
-                Arguments.of(1, 0, -4.0),
+                Arguments.of(1, 0, 4.0),
                 Arguments.of(1, 1, 1.0),
                 Arguments.of(0, 1, 0.0),
                 Arguments.of(0, 2, 0.0),

@@ -22,7 +22,7 @@ public class MatrixLowerView implements MatrixView {
             return 1.0;
         }
 
-        return -value;
+        return value;
     }
 
     @Override

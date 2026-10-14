@@ -16,12 +16,14 @@ class LUFactorizerTest {
 
     private static final double TOLERANCE = 1e-9;
 
+    private final LUFactorizer luFactorizer = new LUFactorizer();
+
     @ParameterizedTest
     @MethodSource("provideFactorizationCases")
     void shouldFactorizeMatrixAndReconstructPermutedInput(double[][] data, int[] expectedPivots) {
         Matrix matrix = new RectangleArrayMatrix(data);
 
-        MatrixDecorator factorization = new LUFactorizer().factorize(matrix);
+        MatrixDecorator factorization = luFactorizer.factorize(matrix);
 
         assertArrayEquals(expectedPivots, factorization.pivotIndices());
         assertMatrixEquals(matrix, factorization);
@@ -32,7 +34,7 @@ class LUFactorizerTest {
     void shouldRejectNonSquareMatrices(double[][] data) {
         Matrix matrix = new RectangleArrayMatrix(data);
 
-        assertThrows(IllegalArgumentException.class, () -> new LUFactorizer().factorize(matrix));
+        assertThrows(IllegalArgumentException.class, () -> luFactorizer.factorize(matrix));
     }
 
     private static Stream<Arguments> provideFactorizationCases() {

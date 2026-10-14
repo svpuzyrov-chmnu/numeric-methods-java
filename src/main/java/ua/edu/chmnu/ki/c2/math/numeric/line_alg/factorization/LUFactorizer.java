@@ -37,10 +37,10 @@ public class LUFactorizer implements Factorizer {
 
             // LU Decomposition
             for (int j = i + 1; j < target.getRows(); j++) {
-                double factor = -target.get(j, i) / target.get(i, i);
+                double factor = target.get(j, i) / target.get(i, i);
                 target.set(j, i, factor);
                 for (int k = i + 1; k < target.getColumns(); k++) {
-                    target.set(j, k, target.get(j, k) + factor * target.get(i, k));
+                    target.set(j, k, target.get(j, k) - factor * target.get(i, k));
                 }
             }
         }
