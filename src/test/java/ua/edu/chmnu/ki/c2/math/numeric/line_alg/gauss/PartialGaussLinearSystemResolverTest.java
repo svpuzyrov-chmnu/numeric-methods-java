@@ -3,6 +3,8 @@ package ua.edu.chmnu.ki.c2.math.numeric.line_alg.gauss;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import ua.edu.chmnu.ki.c2.math.numeric.line_alg.LinearSystemResolver;
+import ua.edu.chmnu.ki.c2.math.numeric.line_alg.LinearSystemResolvers;
 import ua.edu.chmnu.ki.c2.math.numeric.line_alg.exception.LinearSystemException;
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.ExtendedMatrix;
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.Matrix;
@@ -19,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PartialGaussLinearSystemResolverTest {
 
-    private final PartialGaussLinearSystemResolver resolver = new PartialGaussLinearSystemResolver();
+    private final LinearSystemResolver resolver = LinearSystemResolvers.newPatrialGaussResolver();
 
     private static Stream<Arguments> provideSolvableSystems() {
         return Stream.of(

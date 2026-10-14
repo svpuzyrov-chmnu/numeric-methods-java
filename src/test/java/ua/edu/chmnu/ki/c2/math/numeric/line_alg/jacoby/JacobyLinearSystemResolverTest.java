@@ -4,6 +4,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import ua.edu.chmnu.ki.c2.math.numeric.line_alg.AbstractLinearSystemResolverTest;
+import ua.edu.chmnu.ki.c2.math.numeric.line_alg.LinearSystemResolver;
+import ua.edu.chmnu.ki.c2.math.numeric.line_alg.LinearSystemResolvers;
 import ua.edu.chmnu.ki.c2.math.numeric.line_alg.exception.LinearSystemException;
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.Matrix;
 import ua.edu.chmnu.ki.c2.math.numeric.matrix.impl.RectangleArrayMatrix;
@@ -17,6 +19,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class JacobyLinearSystemResolverTest extends AbstractLinearSystemResolverTest {
 
     private static final double TOLERANCE = 1e-8;
+
+    private final LinearSystemResolver resolver = LinearSystemResolvers.newJacobyResolver(TOLERANCE);
 
     private static Stream<Arguments> provideConvergentSystems() {
         return Stream.of(
@@ -98,7 +102,7 @@ class JacobyLinearSystemResolverTest extends AbstractLinearSystemResolverTest {
         Matrix matrix = new RectangleArrayMatrix(copyOf(coefficients));
         Vector vector = new ArrayVector(rhs.clone());
 
-        Vector actual = new JacobyLinearSystemResolver(TOLERANCE).resolve(matrix, vector);
+        Vector actual = resolver.resolve(matrix, vector);
 
         assertArrayEquals(expected, actual.toArray(), TOLERANCE);
         assertResidualWithinTolerance(coefficients, rhs, actual.toArray(), 1e-6);
@@ -110,7 +114,7 @@ class JacobyLinearSystemResolverTest extends AbstractLinearSystemResolverTest {
     @MethodSource("provideInvalidSystems")
     void shouldRejectInvalidSystems(
             double[][] coefficients, double[] rhs, Class<? extends RuntimeException> exceptionType) {
-        assertThrows(exceptionType, () -> new JacobyLinearSystemResolver(TOLERANCE).resolve(
+        assertThrows(exceptionType, () -> resolver.resolve(
                 new RectangleArrayMatrix(copyOf(coefficients)),
                 new ArrayVector(rhs.clone())
         ));
@@ -131,7 +135,7 @@ class JacobyLinearSystemResolverTest extends AbstractLinearSystemResolverTest {
     @ParameterizedTest
     @MethodSource("provideNonConvergentSystems")
     void shouldReportNonConvergence(double[][] coefficients, double[] rhs) {
-        assertThrows(LinearSystemException.class, () -> new JacobyLinearSystemResolver(TOLERANCE).resolve(
+        assertThrows(LinearSystemException.class, () -> resolver.resolve(
                 new RectangleArrayMatrix(copyOf(coefficients)),
                 new ArrayVector(rhs.clone())
         ));
@@ -140,13 +144,14 @@ class JacobyLinearSystemResolverTest extends AbstractLinearSystemResolverTest {
     @ParameterizedTest
     @MethodSource("provideConvergentSystems")
     void shouldRecordIterationsAndSupportRepeatedCalls(double[][] coefficients, double[] rhs, double[] expected) {
-        var resolver = new JacobyLinearSystemResolver(TOLERANCE);
         Vector first = resolver.resolve(
                 new RectangleArrayMatrix(copyOf(coefficients)),
                 new ArrayVector(rhs.clone())
         );
 
-        int firstCallIterations = resolver.getCountIterations();
+        var jacobyResolver = ((JacobyLinearSystemResolver) resolver);
+
+        int firstCallIterations = jacobyResolver.getCountIterations();
 
         Vector second = resolver.resolve(
                 new RectangleArrayMatrix(copyOf(coefficients)),
@@ -156,6 +161,6 @@ class JacobyLinearSystemResolverTest extends AbstractLinearSystemResolverTest {
         assertArrayEquals(expected, first.toArray(), TOLERANCE);
         assertArrayEquals(expected, second.toArray(), TOLERANCE);
         assertTrue(firstCallIterations > 0);
-        assertEquals(firstCallIterations, resolver.getCountIterations());
+        assertEquals(firstCallIterations, jacobyResolver.getCountIterations());
     }
 }
